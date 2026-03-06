@@ -1,0 +1,82 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- GLOBAL HELPER FUNCTIONS ---
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Helper for Conversation access
+    function isParticipant(data) {
+      return isSignedIn() && (data.senderId == request.auth.uid || data.receiverId == request.auth.uid);
+    }
+
+    // --- COLLECTION RULES ---
+
+    match /users/{userId} {
+      // Allow any signed-in user to 'get' a profile to avoid race conditions during auth transitions.
+      allow get: if isSignedIn();
+      allow list: if isSignedIn() && request.query.limit <= 100;
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId);
+    }
+
+    match /students/{studentId} {
+      // SECURITY FIX: Explicitly allow creation for the authenticated user.
+      allow create: if isSignedIn() && request.auth.uid == studentId;
+      
+      allow get: if isOwner(studentId) || (isSignedIn() && exists(/databases/$(database)/documents/teachers/$(request.auth.uid)));
+      allow list: if isSignedIn();
+      allow update: if isOwner(studentId);
+      allow delete: if isOwner(studentId);
+    }
+
+    match /parents/{parentId} {
+      // SECURITY FIX: Explicitly allow creation for the authenticated user.
+      allow create: if isSignedIn() && request.auth.uid == parentId;
+
+      allow get: if isOwner(parentId);
+      allow list: if isSignedIn();
+      allow update: if isOwner(parentId);
+      allow delete: if isOwner(parentId);
+    }
+
+    match /teachers/{teacherId} {
+      // Allow public access to the teacher directory so users can find educators to message.
+      allow get, list: if true;
+      
+      // PERMISSION UPDATE: Allow any signed-in user to add a teacher to the directory for the demo.
+      allow create: if request.auth != null;
+      
+      allow update: if isOwner(teacherId);
+      
+      // PERMISSION FIX: Allow any signed-in user to delete teachers.
+      // This is enabled to facilitate the complete purging of the demo directory as requested.
+      allow delete: if request.auth != null;
+    }
+
+    match /conversations/{conversationId} {
+      // Use the isParticipant check for both get and list.
+      // Firestore will automatically apply this as a filter for 'list' queries.
+      allow get, list: if isParticipant(resource.data);
+      
+      allow create: if isSignedIn() && request.resource.data.senderId == request.auth.uid;
+
+      allow update: if isParticipant(resource.data) 
+        && request.resource.data.senderId == resource.data.senderId
+        && request.resource.data.receiverId == resource.data.receiverId;
+        
+      allow delete: if isSignedIn() && resource.data.senderId == request.auth.uid;
+    }
+    
+    // Forced redeploy to apply onboarding permission fixes.
+  }
+}
