@@ -158,6 +158,8 @@ This layered architecture ensures scalability, security, and efficient AI proces
 
 # Future Improvements
 
+The platform can be expanded with several additional features to enhance communication in educational environments.
+
 In the future, this system can also help teachers communicate student progress to parents more efficiently.
 
 Instead of conducting frequent parent‑teacher meetings for routine updates, teachers could upload or input student performance data into the platform.
