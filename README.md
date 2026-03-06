@@ -158,19 +158,6 @@ This layered architecture ensures scalability, security, and efficient AI proces
 
 # Future Improvements
 
-Possible future enhancements include:
-
-Voice‑to‑text communication
-
-Sentiment detection visualization
-
-Multi‑language support
-
-Conversation history tracking
-
-Integration with school communication system
-
-
 In the future, this system can also help teachers communicate student progress to parents more efficiently.
 
 Instead of conducting frequent parent‑teacher meetings for routine updates, teachers could upload or input student performance data into the platform.
@@ -182,28 +169,17 @@ These summaries could be sent directly to parents, helping them understand their
 This approach would save time for teachers while ensuring that parents stay informed about their child’s development
 
 
-🚀 Future Scope
+Possible future enhancements include:
 
-The platform can be expanded with several additional features to enhance communication in educational environments.
+Voice‑to‑text communication
 
-AI‑Generated Student Performance Reports
+Sentiment detection visualization
 
-Teachers could upload or input student performance data into the system. Using AI powered by Google Gemini, the platform could automatically generate clear and personalized summaries of each student’s progress.
+Multi‑language support
 
-These reports could then be sent directly to parents, reducing the need for frequent routine parent‑teacher meetings while ensuring that parents remain informed about their child’s academic performance.
+Conversation history tracking
 
-Additional Enhancements
-
-Voice‑to‑text message input
-
-Multilingual communication support
-
-Sentiment analysis visualization
-
-Integration with scalable cloud services such as Amazon Web Services
-
-Mobile application version for easier accessibility
-
+Integration with school communication system
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
