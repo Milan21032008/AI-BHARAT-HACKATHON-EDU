@@ -159,6 +159,7 @@ This layered architecture ensures scalability, security, and efficient AI proces
 # Future Improvements
 
 AI‑Generated Student Performance Reports
+
 Teachers could upload or input student performance data into the system. Using AI powered by Google Gemini, the platform could automatically generate clear and personalized summaries of each student’s progress.
 These reports could then be sent directly to parents, reducing the need for frequent routine parent‑teacher meetings while ensuring that parents remain informed about their child’s academic performance.
 
